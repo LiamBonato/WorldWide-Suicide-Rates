@@ -1,0 +1,74 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Figure 7: Mean Suicide Rates by Age Groups",
+    "orient": "bottom"
+  },
+  "height": 200,
+  "width": 250,
+  "data": {
+    "url": "https://raw.githubusercontent.com/LiamBonato-Monash/FIT3179/Data-Visualisation-2/datasets/age_rates2.csv"
+  },
+  "params": [
+    {
+      "name": "country_selection",
+      "value": "Australia",
+      "bind": {
+        "input": "select",
+        "options": [
+          "Australia",
+          "Belgium",
+          "Italy",
+          "New Zealand",
+          "Norway",
+          "Qatar",
+          "Russian Federation",
+          "Singapore",
+          "South Africa",
+          "Sri Lanka",
+          "Sweden",
+          "United Kingdom",
+          "United States",
+          "Uruguay",
+          "Uzbekistan"
+        ],
+        "name": "Country: "
+      }
+    }
+  ],
+  "mark": {"type": "bar"},
+  "encoding": {
+    "x": {
+      "field": "age",
+      "type": "nominal",
+      "title": "Age",
+      "sort": [
+        "5-14 years",
+        "15-24 years",
+        "25-34 years",
+        "35-54 years",
+        "55-74 years",
+        "75+ years"
+      ]
+    },
+    "y": {
+      "aggregate": "mean",
+      "field": "suicide_rate",
+      "type": "quantitative",
+      "title": "Suicide Rate"
+    },
+    "tooltip": [
+      {
+        "aggregate": "mean",
+        "field": "suicide_rate",
+        "title": " Mean Suicide Rate:",
+        "format": ",.2r"
+      }
+    ],
+    "color": {"value": "#BAD7F2"}
+  },
+  "transform": [{"filter": "datum.country == country_selection"}],
+  "config": {
+    "background":"#DFFFD6"
+  }
+}

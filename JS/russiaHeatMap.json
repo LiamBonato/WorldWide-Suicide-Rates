@@ -1,0 +1,55 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "height": 150,
+  "width": 390,
+  "data": {
+    "url": "https://raw.githubusercontent.com/LiamBonato-Monash/FIT3179/Data-Visualisation-2/datasets/RussiaData.csv"
+  },
+  "title": {"text": "Russia", "orient": "top"},
+  "config": {"font": "sulphur","background":"#f8f8f8","view": {"strokeWidth": 0, "step": 13}, "axis": {"domain": false}},
+  "mark": "rect",
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "nominal",
+      "title": "Year",
+      "axis": {"labelAngle": 0, "values": [1985, 1990, 1995, 2000, 2005, 2010, 2014]}
+    },
+    "y": {
+      "field": "age",
+      "type": "nominal",
+      "sort": ["75+ years","55-74 years","35-54 years", "25-34 years", "15-24 years", "5-14 years"],
+      "axis": {"orient":"right", "tickOpacity":0, "labelPadding":25},
+      "title": ""
+  },
+    "color": {
+      "field": "suicide_rate",
+      "type": "quantitative",
+      "scale": {
+        "type": "threshold",
+        "domain": [10, 20, 30, 40, 50],
+        "range": [
+          "#f2f0f7",
+          "#dadaeb",
+          "#bcbddc",
+          "#9e9ac8",
+          "#756bb1",
+          "#54278f"
+        ]
+      },
+      "legend": {
+        "title": "Suicide Rate",
+        "orient": "bottom",
+        "direction": "horizontal",
+        "padding": 3
+
+      }
+    },
+    "tooltip": [
+      {"field": "age", "title": "Age Group"},
+      {"field": "year", "title": "Year"},
+        {"field": "suicide_rate", "title": "Suicide Rate", "format": ",.2r"}
+    ]
+  },
+  "transform": [{"filter": {"field": "year", "lt": 2015}}]
+}

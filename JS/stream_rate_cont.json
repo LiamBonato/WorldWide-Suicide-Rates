@@ -1,0 +1,52 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 405, "height": 200,
+  "data": {"url": "https://raw.githubusercontent.com/LiamBonato-Monash/FIT3179/Data-Visualisation-2/datasets/suicides_per_cont.csv"},
+  "mark": "area",
+  "params": [{
+    "name": "continent",
+    "select": {"type": "point", "fields": ["continent"]},
+    "bind": "legend"
+  }],
+  "transform": [
+    {
+      "filter": {"field": "year", "gt": "820454400000"}
+    }
+  ],
+  "encoding": {
+    "x": {
+      "timeUnit": "year" , "field": "year", "title": "Year",
+      "axis": {"domain": true, "tickSize": 2}
+    },
+    "y": {
+      "field": "suicide_rate",
+      "stack": "center", "axis": null,
+      "type": "quantitative",
+      "title": "Suicide Rates"
+    },
+    "color": {
+      "field":"continent",
+      "scale": {"type": "ordinal",
+      "range": ["#6a42a1", "#ba4dd1", "#fac64d", "#ffee6e", "#318ff7", "#1b39f2"]
+
+      },
+      "legend":{
+        "title": "Continents",
+        "orient": "bottom"
+      }
+    },
+    "opacity": {
+      "condition": {"param": "continent", "value": 1},
+      "value": 0.2
+    },
+    "tooltip": [
+      {"field": "continent", "title": "Continent"},
+      {"field": "suicide_rate", "title": "Suicide Rate", "format": ",.3r"}
+    ]
+    },
+    "config": {
+      "font": "sulphur",
+      "background":"#f8f8f8",
+      "style": {"cell": {"stroke": "transparent"}}
+    }
+  }

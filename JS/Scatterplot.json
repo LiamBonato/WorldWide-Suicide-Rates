@@ -1,0 +1,118 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 375,
+  "height": 460,
+  "data": {
+    "url": "https://raw.githubusercontent.com/LiamBonato-Monash/FIT3179/Data-Visualisation-2/datasets/rate_vs_gdp_with_cont.csv"
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "opacity": 0.8,
+        "size": 45
+      },
+      "params": [
+        {
+            "name": "selection",
+            "select": {"type": "point", "fields": ["continent"]},
+            "bind": "legend"
+        },
+        {
+          "name": "grid",
+          "select": "interval",
+          "bind": "scales"
+        }
+      ],
+      "encoding": {
+        "x": {"field": "gdp", "type": "quantitative","axis":{"tickMinStep": 15000},"scale":{"domainMax":85000}},
+        "y": {"field": "suicide_rate", "type": "quantitative", "axis": {"tickMinStep": 5}},
+        "color": {
+          "field": "continent",
+          "scale": {
+            "type": "ordinal",
+            "range": ["#6a42a1", "#ba4dd1", "#fac64d", "#ffee6e", "#318ff7", "#1b39f2"]
+          },
+          "legend": {"title": "Continents","orient": "top"}
+        },
+        "opacity": {"condition": {"param": "selection", "value": 1}, "value": 0.1},
+        "tooltip": [
+          {"field": "country", "title": "Country"},
+          {"field": "continent", "title": "Continent"},
+          {
+            "field": "suicide_rate",
+            "title": "Suicide Rate",
+            "format": ",.3r"
+          },
+          {
+            "field": "gdp",
+            "title": "GDP Per Capita",
+            "format": ",.3r"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "strokeDash": [6,4]
+      },
+      "encoding": {
+        "y": {
+          "field": "suicide_rate",
+          "type": "quantitative",
+          "aggregate": "mean",
+          "title": "Suicide Rate (per 100,000)"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "strokeDash": [6,4]
+      },
+      "encoding": {
+        "x": {
+          "field": "gdp",
+          "type": "quantitative",
+          "aggregate": "mean",
+          "title": "GDP Per Capita ($USD)"
+        }
+      }
+    },
+    {
+      "mark":{
+        "type": "text",
+        "align": "left",  
+        "baseline": "middle",
+        "dx": 6,
+        "fontSize": 13,
+        "fontStyle": "italic"
+
+      },
+      "encoding": {
+        "text": {"field": "country", "type": "nominal"},
+        "x": {"field": "gdp", "type": "quantitative"},
+        "y": {"field": "suicide_rate", "type": "quantitative"},
+        "color": {
+          "field": "continent",
+          "scale": {
+            "type": "ordinal",
+            "range": ["#6a42a1", "#ba4dd1", "#fac64d", "#ffee6e", "#318ff7", "#1b39f2"]
+          }},
+      "opacity": {
+          "condition": {
+            "test": " datum['country'] == 'Australia' || datum['country'] == 'San Marino'|| datum['country'] == 'Qatar'|| datum['country'] == 'Chile'|| datum['country'] == 'Sri Lanka'|| datum['country'] == 'France'|| datum['country'] == 'Singapore'",
+            "value": 1
+          },
+          "value": 0
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "sulphur",
+    "background":"#f8f8f8"
+  }
+}

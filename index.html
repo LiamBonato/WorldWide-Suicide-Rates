@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Worldwide Suicide Rates</title>
+  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+  <!-- Import pure.css -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+    integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+  <!-- CSS file -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+
+
+</head>
+
+<body id="top">
+
+  <div class="page" >
+
+    <!-- pure grid group -->
+    <h1>Worldwide Suicide Rates, 1985-2020</h1>
+    <hr>
+    <!-- end pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description-left">
+        <p>According to the <b>World Health Organisation</b>, more than <b>700,000 people die to suicide every year</b>, that is
+          equivalent to one death to suicide every 45 seconds. Suicide is the
+          fourth leading cause of death amongst individuals aged 15-29.
+        </p>
+        <p>In this visualisation, we will look at how global suicide rates are affected by <b>geographical location, Gross Domestic Profit per
+          Capita (GDP), sex and age</b> to see if there is any
+          trends across the data. All suicide rates will be <b>normalised to per 100,000 population.</b>
+        </p>
+      </div>
+    </div>
+      <div class="pure-u-1-2" >
+        <div class="description-right">
+          <p>👆 <b>Select a box to scroll to that section.</b></p>
+          <a href="#GeoLocate"><div class="box"><font style="color: black">Geographical Location</font></div></a><br>
+          <a href="#gdp"><div class="box"><font style="color: black">Gross Domestic Profit</font></div></a><br>
+          <a href="#sex"><div class="box"><font style="color: black">Biological Sex</font></div></a><br>
+          <a href="#age_groups"><div class="box"><font style="color: black">Age Groups</font></div></a><br>
+        </div>
+    </div>
+    </div>
+    <!-- pure grid group -->
+    
+
+    <div>
+      <div>
+        <div id="GeoLocate"class="description description-left">
+          <h2>Geographical Location</h2>
+        </div>
+        <hr>
+      </div>
+      <div>
+        <h3>Global Suicide Rates, 2000-2019</h3>
+        <div id="vis1" class="vis-container"></div>
+      </div>
+      <div id="slider-container">
+        <p><b>Year:</b></p>
+        <input type="range" id="year-slider" min="2000" max="2019" step="1" value="2000">
+        <span id="slider-value">2000</span>
+      </div>
+    </div>
+    <!-- end pure grid group -->
+    
+    <div class="pure-g">
+      <div class="pure-u-1-2">
+        <div class="description description-left">
+          <p>
+            <b>The map above</b> shows a global perspective of suicide rates per 100,000 for the years 2000 to 2019. From this map we can see that North-Eastern Europe as well as southern African countries tend 
+            to have consistently higher suicide rates. Australia, United States and the United Kingdom appear to fall in the average range and tend to have consistent rates throughout the years.
+            <b>The map to the right</b> shows a zoomed in perspective of each continent 
+          </p>
+          <p>
+            👆<i><b>Select a continent</b> below the map, to see how the countries within it have varying suicide rates. <b>Use the zoom slider</b> 
+            to zoom into each continent.</i> <br>
+            👆 <i><b>Use the year sliders</b> in both maps to see how suicide rates change year to year and <b>hover over countries</b> to see the countries suicide rate and GDP.</i>
+          </p>
+          <p>
+            From both maps, it is <b>hard to make conclusive statements</b> about whether suicide rates are directly affected by geographical location, as <b>we cannot factor in all aspects of living</b>,
+            such as, common religions, quality of life and social stigma around mental illness. It is also important to note that certain countries have significantly less reported data on their 
+            yearly suicide numbers and therefore there may be higher rates in these areas due to unaccounted for deaths.
+          </p>
+        </div>
+      </div>
+      <div class="pure-u-1-2">
+        <div class="description description-right">
+        <h3>Continental Suicide Rates, 2000-2019</h3>
+        <div id="vis10" class="vis-container"></div>
+        <div id="slider-container">
+          <p><b>Year:</b></p>
+          <input type="range" id="year-slider2" min="2000" max="2019" step="1" value="2000">
+          <span id="slider-value2">2000</span>
+        </div>
+        <div id="slider-container">
+          <p><b>Zoom:</b></p>
+          <input type="range" id="zoom-slider" min="200" max="700" step="100" value="300">
+          <span id="slider-value3">20</span><span>%</span>
+        </div>
+        <div id="slider-container">
+          <label for="continent-select"><b>Continent:</b> </label><p></p>
+          <select id="continent-select">
+            <option value="[20, 10]">Africa</option>
+            <option value="[73, 30]">Asia</option>
+            <option value="[15, 50]">Europe</option>
+            <option value="[-100, 40]">North America</option>
+            <option value="[125, -15]" selected>Oceania</option>
+            <option value="[-60, -20]">South America</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- pure grid group -->
+    <div id="gdp">
+      <h2>Gross Domestic Profit</h2>
+      <hr>
+      <div class="pure-g">
+        <div class="pure-u-1-2">
+          <div class="description description-left">
+            <h3>Mean GDP per Continent, 2019</h3>
+            <div id="vis9" class="vis-container"></div>
+          </div>
+        </div>
+        <div class="pure-u-1-2">
+          <div class="description-right">
+          <h3>Continental Suicide Rates, 1996-2020</h3>
+          <div id="vis2" class="vis-container"></div>
+        </div>
+        </div>
+      </div>
+    </div>
+      <!-- end pure grid group -->
+    <div class="pure-g">
+      
+      <div class="pure-u-1-2">
+        
+        <br>
+        <h3>Suicide Rate Vs GDP per Capita, 1985-2020</h3>
+        <div id="vis3" class="vis-container"></div>
+      </div>
+      <div class="pure-u-1-2">
+        <div class="description-right">
+          <p>From <b>the bar chart above</b> we can see that, in 2019, <b style="color: orange;" >Europe</b> had a significantly higher GDP per capita compared to other continents, however if we look at <b>the stream graph</b> we cannot see <b style="color: orange;" >Europe</b>
+          having a major difference in suicide rates compared to other continents</p>
+          <p>
+            <b>The scatter plot </b> to the left shows the <b>Average suicide rate</b> vs the <b>Average GDP per capita</b> across 1985 to 2020. The dashed lines show the average suicide rates and GDP. We can see that there is no direct or indirect 
+            relationship between the two, but, what we can see is that, <b>countries with a below average GDP are more likely to have an above average suicide rate compared to countries with a higher GDP.</b>
+          </p>
+          <span style="font-size:12px;">
+            <p>
+              🖱️<i><b>Hover</b> over data in <b>the stream graph</b> and <b>the scatter plot</b> to see more information about them.</i> <br>
+              🖱️<i><b>Click</b> on continents in the legend to highlight the data from that continent. </i><br>
+              🖱️<i><b>Use your mouse and scroll wheel</b> to zoom and navigate around <b>the scatterplot, double click</b> the plot to return to the whole view.</i>
+            </p>
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    <div id="sex">
+      <h2>Biological Sex</h2>
+      <hr>
+      <div>
+        <h3>Biological Sex Comparison of Suicide Rates, 1985-2020</h3><br>
+        <div id="vis4" class="vis-container"></div>
+        <div class="pure-g">
+          <div class="pure-u-1-2">
+            <div id="slider-container">
+              <label for="country-select"><b>Country:</b> </label><p></p>
+              <select id="country-select">
+                <option value="Australia">Australia</option>
+                <option value="Belgium">Belgium</option>
+                <option value="Italy">Italy</option>
+                <option value="New Zealand">New Zealand</option>
+                <option value="Norway">Norway</option>
+                <option value="Qatar">Qatar</option>
+                <option value="Russian Federation">Russian Federation</option>
+                <option value="Singapore">Singapore</option>
+                <option value="South Africa">South Africa</option>
+                <option value="Sri Lanka">Sri Lanka</option>
+                <option value="Sweden">Sweden</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="United States">United States</option>
+                <option value="Uruguay">Uruguay</option>
+                <option value="Uzbekistan">Uzbekistan</option>
+              </select>
+            </div>
+            <p>
+              👆<i><b>Select one</b> of the 15 countries from above to see <b>how <br>sex affects the suicide rate</b> around the world.</i>
+            </p>
+            <p>
+              🖱️<i><b>Hover</b> over data above to see more information </i>
+            </p>
+          </div>
+          <div class="pure-u-1-2">
+            <div class="description-right">
+            <p>
+              From <b>this dot plot</b>, across all countries we can see that the <b>suicide rates of <font color="#F79D84">males</font> exceeds that of <font color="#5B4E77">females</font></b> in every year.
+            </p>
+            <p>
+              We can see that sex does in fact have an affect on suicide rates. The World Health Organisation states that in the Western world, <b><font color="#F79D84">males</font> die by suicide 
+              3-4 times more often than <font color="#5B4E77">females</font>.</b>
+            </p>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="age_groups">
+      <h2>Age Groups</h2>
+      <hr>
+      <div>
+        <div class="pure-g">
+          <div class="pure-u-1-2">
+            <div class="description description-left">
+            <p>
+              Looking at the <b>Chart</b> to the right, we can see the mean suicide rate distributions amongst different age groups from 1985 to 2020.
+              Excluding 5-14, we see fairly consistent rates amongst all age groups in Australia, New Zealand, Norway and the United Kingdom. We can see a higher rates
+              amongst 75+ age group in Italy, Singapore and Uruguay.
+            </p>
+            <p>
+              🖱️<i><b>Click</b> on an age group in the legend to highlight it on the chart.</i>
+            </p>
+            <p>
+              Below we can see the variations across the years from different countries. In some countries such as the United States we see very consistent rates across the years,
+              and some countries such as South Africa we see lots of variation year to year.
+            </p>
+            <p>
+              👆<i><b>Select a Country</b> from the dropdown box below to filter by Country.</i>
+            </p>
+          </div>
+          </div>
+          <div class="pure-u-1-2">
+            <div class="description-right">
+            <h3>Suicide Rate across Age Groups, 1985-2020</h3>
+            <div id="vis11" class="vis-container"></div>
+          </div>
+          </div>
+        </div>
+      </div>
+      <h3>Suicide Rates by Age Groups over the years, 1985-2020</h3>
+      <div id="vis12" class="vis-container"></div>
+        <div id="slider-container">
+          <label for="country-select2"><b>Country:</b> </label><p></p>
+          <select id="country-select2">
+            <option value="Australia">Australia</option>
+            <option value="Belgium">Belgium</option>
+            <option value="Italy">Italy</option>
+            <option value="New Zealand">New Zealand</option>
+            <option value="Norway">Norway</option>
+            <option value="Russian Federation">Russian Federation</option>
+            <option value="Singapore">Singapore</option>
+            <option value="South Africa">South Africa</option>
+            <option value="Sri Lanka">Sri Lanka</option>
+            <option value="Sweden">Sweden</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="United States">United States</option>
+            <option value="Uruguay">Uruguay</option>
+            <option value="Uzbekistan">Uzbekistan</option>
+          </select>
+        </div>
+      <div>
+        <h3>
+          Heatmaps of Australia, France, Russia and The United States, 1985-2014
+        </h3>
+        <br>
+        <div class="pure-g">
+          <div class="pure-u-1-2">
+            <div id="vis5" class="vis-container"></div>
+          </div>
+          <div class="pure-u-1-2">
+            <div id="vis6" class="vis-container-right"></div>
+          </div>
+        </div>
+        <div class="pure-g">
+          <div class="pure-u-1-2">
+            <div id="vis7" class="vis-container"></div>
+          </div>
+          <div class="pure-u-1-2">
+            <div id="vis8" class="vis-container-right"></div>
+          </div>
+        </div>
+        <div>
+        
+        </div>
+        <div class="pure-g">
+          <div class="pure-u-1-2">
+            <div class="description-left">
+            <p>
+              Above we can see <b>Heat Maps</b> of particular countries across different continents, in order to see trends of suicide rates amongst age groups throughout the time period.
+              We can see that there is no worldwide consistency in terms of age affecting suicide rates as we saw with sex.
+            </p>
+          </div>
+          </div>
+          <div class="pure-u-1-2">
+            <div class="description-right">
+            <p>
+              However, if we look at some countries across their available data we can see that there does seem to be some trend of age affecting 
+              the rates. As we see in <b style="color:coral">France</b>, older generations typically have higher rates, whereas in <b style="color:cornflowerblue">Australia</b>
+              the 25-54 age range has higher rates consistently.
+            </p>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="#top"><div class="box"><font style="color: black">Back to top</font></div></a><br>
+  </div> <!-- end page -->
+
+
+  <script type="text/javascript">
+    var specVis1 = "./JS/GlobalMap.json";
+    var specVis2 = "./JS/stream_rate_cont.json";
+    var specVis3 = "./JS/Scatterplot.json";
+    var specVis4 = "./JS/GenderRates.json";
+    var specVis5 = "./JS/AustraliaHeatMap.json";
+    var specVis6 = "./JS/franceHeatMap.json";
+    var specVis7 = "./JS/russiaHeatMap.json";
+    var specVis8 = "./JS/usHeatMap.json";
+    var specVis9 = "./JS/GDPbarChart.json";
+    var specVis10 = "./JS/continentalMap.json";
+    var specVis11 = "./JS/stackedBarAge.json";
+    var specVis12 = "./JS/StackedAgeBrush.json";
+
+    //vegaEmbed("#vis1", specVis1).then(() => {
+  // Set an initial value for the slider
+    //}).catch(console.error);
+
+    vegaEmbed('#vis2', specVis2, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis3', specVis3, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    //vegaEmbed('#vis4', specVis4, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    //}).catch(console.error);
+
+    vegaEmbed('#vis5', specVis5, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis6', specVis6, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis7', specVis7, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis8', specVis8, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#vis9', specVis9, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    //vegaEmbed('#vis10', specVis10, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    //}).catch(console.error);
+
+    vegaEmbed('#vis11', specVis11, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+
+    vegaEmbed("#vis1", specVis1,{ "actions": false }).then((result) => {
+      const view = result.view;
+
+      // Add event listener for the slider
+      const slider = document.getElementById("year-slider");
+      const sliderValue = document.getElementById("slider-value");
+      slider.addEventListener("input", function () {
+        const yearSelection = +this.value;
+        sliderValue.textContent = yearSelection;
+        view.signal("Year_selection", yearSelection).runAsync();
+      });
+    }).catch(console.error);
+
+    vegaEmbed("#vis4", specVis4,{ "actions": false }).then((result) => {
+      const view = result.view;
+      // Add event listener for the slider
+      const country = document.getElementById("country-select");
+      country.addEventListener("input", function () {
+        const selectedCountry = this.value;
+        view.signal("country_selection", selectedCountry).runAsync();
+
+      })
+    }).catch(console.error);
+
+    vegaEmbed("#vis10", specVis10,{ "actions": false }).then((result) => {
+      const view = result.view;
+
+      // Add event listener for the slider
+      const slider = document.getElementById("year-slider2");
+      const sliderValue = document.getElementById("slider-value2");
+      const zoomSlider = document.getElementById("zoom-slider");
+      const zoomValue = document.getElementById("slider-value3");
+      const continent = document.getElementById("continent-select");
+      slider.addEventListener("input", function () {
+        const yearSelection = +this.value;
+        sliderValue.textContent = yearSelection;
+        view.signal("Year_selection", yearSelection).runAsync();
+      });
+      zoomSlider.addEventListener("input", function () {
+        const zoomLevel = +this.value;
+        zoomValue.textContent = (zoomLevel-200)/500 * 100;
+        // Update the "Zoom_selection" parameter in the Vega-Lite specification
+        view.signal("zoom_level", zoomLevel).runAsync();
+      });
+      continent.addEventListener("input", function () {
+        const selectedCenter = JSON.parse(this.value);
+        view.signal("center_to", selectedCenter).runAsync();
+
+      })
+    }).catch(console.error);
+
+    vegaEmbed("#vis12", specVis12,{ "actions": false }).then((result) => {
+      const view = result.view;
+      // Add event listener for the slider
+      const country = document.getElementById("country-select2");
+      country.addEventListener("input", function () {
+        const selectedCountry = this.value;
+        view.signal("country_select", selectedCountry).runAsync();
+
+      })
+    }).catch(console.error);
+      </script>
+</body>
+
+</html>

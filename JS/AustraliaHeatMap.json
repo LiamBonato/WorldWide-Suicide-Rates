@@ -1,0 +1,73 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "height": 150,
+  "width": 390,
+  "data": {
+      "url": "https://raw.githubusercontent.com/LiamBonato-Monash/FIT3179/Data-Visualisation-2/datasets/ausData.csv"
+  },
+  "title": {"text": "Australia",
+            "orient":"top"},
+  
+  "mark": "rect",
+  "encoding": {
+      "x": {
+          "field": "year",
+          "type": "ordinal",
+          "title": "Year",
+          "axis": {
+              "labelAngle": 0,
+              "values": [1985, 1990, 1995, 2000, 2005, 2010, 2014],
+              "gridOpacity":0
+          }
+      },
+      "y": {
+          "field": "age",
+          "type": "nominal",
+          "sort": ["75+ years","55-74 years","35-54 years", "25-34 years", "15-24 years", "5-14 years"],
+          "axis": {"orient":"right", "tickOpacity":0, "labelPadding":25, "gridOpacity":0},
+          "title": ""
+      },
+      "color": {
+          "field": "suicide_rate",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [6,9,12,15,18],
+            "range": [
+              "#eff3ff",
+              "#c6dbef",
+              "#9ecae1",
+              "#6baed6",
+              "#3182bd",
+              "#08519c"
+            ]
+          },
+          "legend": {
+            "title": "Suicide Rate",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "padding": 3
+
+          }
+      },
+      "tooltip":[
+        {"field": "age", "title": "Age Group"},
+        {"field": "year", "title": "Year"},
+        {"field": "suicide_rate", "title": "Suicide Rate", "format": ",.2r"}        
+      ]
+      
+  },
+  "transform": [{"filter": {"field": "year", "lt": 2015 }}],
+  "config": {
+    "background":"#f8f8f8",
+    "font": "sulphur",
+      "view": {
+          "strokeWidth": 0,
+          "step": 13
+      },
+      "axis": {
+          "domain": false
+      }
+
+  }
+}

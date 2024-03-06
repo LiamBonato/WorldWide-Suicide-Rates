@@ -1,0 +1,63 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 390, "height": 200,
+  "data": {
+    "url": "https://raw.githubusercontent.com/LiamBonato-Monash/FIT3179/Data-Visualisation-2/datasets/gdp_data.csv"
+  },
+  "transform": [
+    {"filter": {"field": "year", "equal": 2019}},
+    {"filter": {"field": "GDP_per_capita_USD", "valid": true}}
+  ],
+  "layer":[
+    {
+      "mark": "bar",
+      "encoding": {
+        "y": {"field": "continent", "title": "Continent","axis":{"labelExpr": "","tickOpacity":0}},
+        "x": {
+          "aggregate": "mean",
+          "field": "GDP_per_capita_USD",
+          "type": "quantitative",
+          "sort": "ascending",
+          "title": "GDP per Capita ($USD)",
+          "scale":{"domainMax":45000},
+          "axis": {"tickMinStep":7500}
+        },
+        "color": {
+          "field": "continent",
+          "scale": {
+            "type": "ordinal",
+            "range": ["#cfcfcf", "#cfcfcf", "#fac64d", "#cfcfcf", "#cfcfcf", "#cfcfcf"]
+          },
+          "legend": null
+        }
+      }
+  },
+  {
+    "mark": {
+      "type": "text",
+      "align": "left",
+      "baseline": "middle",
+      "dx": 3,
+      "fontWeight": "bold"
+    },
+    "encoding": {
+      "y": {"field": "continent", "title": "Continent"},
+      "x": {
+        "aggregate": "mean",
+        "field": "GDP_per_capita_USD",
+        "type": "quantitative",
+        "sort": "ascending",
+        "title": "GDP per Capita ($USD)"
+      },
+      "text":{"field": "continent"}
+    }
+  }
+],
+  
+  
+  "config": {
+    "background":"#f8f8f8",
+    "font": "sulphur",
+    "style": {"cell": {"stroke": "transparent"}}
+  }
+}

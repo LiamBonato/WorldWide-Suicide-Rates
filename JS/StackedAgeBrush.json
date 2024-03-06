@@ -1,0 +1,95 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/LiamBonato-Monash/FIT3179/Data-Visualisation-2/datasets/age_rates3.csv"
+  },
+  "params": [
+    {
+      "name": "country_select",
+      "value": "Australia"
+    }
+  ],
+  "vconcat": [
+    {
+      "width": 825,
+      "mark": "area",
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "temporal",
+          "scale": {"domain": {"param": "brush"}},
+          "axis": {"title": "", "gridOpacity":0}
+        },
+        "y": {
+          "field": "suicide_rate",
+          "type": "quantitative",
+          "title": "Suicide Rate",
+          "axis": {"gridOpacity":0}
+        },
+        "color": {
+          "field": "age",
+          "title": "Age Order",
+          "type": "ordinal",
+          "scale": {
+            "range": [
+              "#ffffcc",
+              "#d9f0a3",
+              "#addd8e",
+              "#78c679",
+              "#31a354",
+              "#006837"
+            ]
+          },
+          "sort": {"field": "age_order"},
+          "legend": {"title": "Age Group",
+          "orient": "bottom"}
+        },
+        "order": {"field": "age_order"},
+        "tooltip": [
+          {"field": "age", "title": "Age Group"},
+          {
+            "field": "suicide_rate",
+            "title": "Suicide Rate (per 100,000)",
+            "format": ",.3r"
+          }
+        ]
+      },
+      "transform": [{"filter": "datum.country == country_select"}]
+    },
+    {
+      "title":{"text":"Use this Line Chart to Filter out the data based on time"},
+      "width": 825,
+      "height": 60,
+      "mark": "line",
+      "params": [
+        {"name": "brush", "select": {"type": "interval", "encodings": ["x"]}}
+      ],
+      "encoding": {
+        "x": {"field": "year", "type": "temporal", "title": "Year","axis": {"gridOpacity":0}},
+        "y": {
+          "field": "sum_suicide_rate",
+          "type": "quantitative",
+          "axis": {"tickCount": 3, "grid": false},
+          "title": "Suicide Rate"
+        },
+        "color":{
+          "value": "#006837"
+        }
+      },
+      "transform": [{"filter": "datum.country == country_select"},
+      {
+        "aggregate": [{
+          "op": "sum",
+          "field": "suicide_rate",
+          "as": "sum_suicide_rate"
+        }],
+        "groupby": ["year"]
+      }]
+    }
+  ],
+  "config": {
+    "background":"#f8f8f8",
+    "font": "sulphur",
+    "style": {"cell": {"stroke": "transparent"}}
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 835,
+  "height": 250,
+  "data": {"url": "https://raw.githubusercontent.com/LiamBonato-Monash/FIT3179/Data-Visualisation-2/datasets/gender_rates.csv"},
+  "params": [
+    {
+      "name": "country_selection",
+      "value": "Australia"
+    }
+  ],
+  "layer": [
+    {
+      "mark": "rule",
+      "encoding": {
+        "x": {"field": "year", "type": "ordinal", "timeUnit": "year", "title": "Year", "axis": {"tickCount": 5}},
+        "y": {"field": "suicide_rate", "aggregate": "min"},
+        "y2": {"field": "suicide_rate", "aggregate": "max"}
+      },
+      "transform": [{"filter": "datum.country == country_selection"},
+      {"filter": {"field": "suicide_rate", "gt": 0 }}]
+    },
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 100,
+        "opacity": 1},
+      "encoding": {
+        "x": {"field": "year", "type": "ordinal", "timeUnit": "year", "title": "Year", "axis": {"labelAngle": 45, "gridOpacity":0}},
+        "y": {"field": "suicide_rate", "type": "quantitative", "title": "Suicide Rate (per 100,000)", "axis":{"grid": false}},
+        "color": {"field": "sex", "type": "nominal", "title": "Sex", "scale":{
+          "range": ["#5B4E77 ","#F79D84"]
+        },
+        "legend":{
+          "title": "Sex",
+          "orient": "bottom"
+        }
+      },
+      "tooltip": [
+        {"field": "sex", "title": "Sex"},
+        {"field": "suicide_rate", "title": "Suicide Rate", "format": ",.2r"}
+      ]
+      },
+      "transform": [{"filter": "datum.country == country_selection"},
+      {"filter": {"field": "suicide_rate", "gt": 0 }}]
+    }
+  ],
+  "config": {
+    "font": "sulphur",
+    "background":"#f8f8f8",
+    "style": {"cell": {"stroke": "transparent"}}
+  }
+}
